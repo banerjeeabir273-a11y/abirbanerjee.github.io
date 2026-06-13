@@ -13,263 +13,308 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
+    /* ═══════════════════════════════════════════════
+       COLOUR TOKENS  — teal-blue-green blend
+       accent  : #00bfa5  (cyan-teal, 40 % blue / 60 % green)
+       accent-2: #0097a7  (deep ocean teal)
+    ═══════════════════════════════════════════════ */
     :root {
-      --bg: #09141a;
-      --bg-soft: #0c1b23;
-      --panel: #112531;
-      --panel-2: #183344;
-      --border: rgba(255, 255, 255, .08);
-      --text: #e7eff5;
-      --muted: #92aab5;
-      --accent: #00b4d8; 
-      --accent-2: #0077b6; 
-      --accent-soft: rgba(0, 180, 216, .12);
-      --radius: 14px;
+      --bg:         #07101a;
+      --bg-soft:    #0b1822;
+      --panel:      #0f2030;
+      --panel-2:    #162d40;
+      --border:     rgba(0, 191, 165, .13);
+      --border-dim: rgba(255, 255, 255, .06);
+      --text:       #dff0ec;
+      --muted:      #7aadbb;
+      --accent:     #00bfa5;
+      --accent-2:   #0097a7;
+      --accent-3:   #005f6b;
+      --accent-soft:rgba(0, 191, 165, .10);
+      --glow:       rgba(0, 191, 165, .18);
+      --radius:     14px;
+      --radius-sm:  9px;
     }
 
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 90px;
-    }
+    /* ── BASE ── */
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
 
     body {
       background-color: var(--bg);
       color: var(--text);
       font-family: 'IBM Plex Sans', sans-serif;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
     h1, h2, h3, h4, .navbar-brand, .nav-link, .btn {
       font-family: 'Space Grotesk', sans-serif;
     }
+    .mono { font-family: 'IBM Plex Mono', monospace; }
 
-    .mono {
-      font-family: 'IBM Plex Mono', monospace;
-    }
+    a { color: var(--accent); text-decoration: none; transition: color .2s; }
+    a:hover { color: var(--accent-2); }
 
-    a {
-      color: var(--accent);
-      text-decoration: none;
-      transition: color .2s ease-in-out;
-    }
-
-    a:hover {
-      color: var(--accent-2);
-    }
-
+    /* ── AMBIENT BACKGROUND ── */
     body::before {
       content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      background: radial-gradient(900px 500px at 85% -10%, rgba(0, 180, 216, .10), transparent 60%),
-                  radial-gradient(700px 450px at -10% 30%, rgba(0, 119, 182, .08), transparent 60%),
-                  var(--bg);
+      position: fixed; inset: 0; z-index: -2;
+      background:
+        radial-gradient(ellipse 900px 500px at 90% -5%,  rgba(0,191,165,.12), transparent 60%),
+        radial-gradient(ellipse 600px 400px at -5% 40%,  rgba(0,151,167,.09), transparent 60%),
+        radial-gradient(ellipse 500px 350px at 50% 110%, rgba(0,95,107,.07),  transparent 55%),
+        var(--bg);
     }
-
     body::after {
       content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      background-image: linear-gradient(rgba(255, 255, 255, .02) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(255, 255, 255, .02) 1px, transparent 1px);
-      background-size: 42px 42px;
-      mask-image: radial-gradient(900px 600px at 80% 0%, rgba(0, 0, 0, .5), transparent 70%);
+      position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(ellipse 900px 600px at 80% 0%, rgba(0,0,0,.55), transparent 70%);
     }
 
+    /* ── BOOTSTRAP OVERRIDES ── */
+    .text-info              { color: var(--accent) !important; }
+    .btn-info               { background-color: var(--accent) !important; border-color: var(--accent) !important; color: #04131e !important; }
+    .btn-info:hover         { background-color: var(--accent-2) !important; border-color: var(--accent-2) !important; }
+    .btn-outline-info       { color: var(--accent) !important; border-color: var(--accent) !important; }
+    .btn-outline-info:hover { background-color: var(--accent) !important; color: #04131e !important; }
+
+    /* ── NAVBAR ── */
     .navbar-custom {
       background-color: transparent;
       border-bottom: 1px solid transparent;
       transition: all .35s ease-in-out;
     }
-
     .navbar-custom.scrolled {
-      background-color: rgba(9, 20, 26, .85) !important;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background-color: rgba(7,16,26,.88) !important;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
     }
-
+    .navbar-brand { min-width: 0; }
+    .brand-name {
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      max-width: min(200px, 48vw); display: inline-block;
+    }
     .brand-badge {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
+      width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      color: #05131a;
-      font-size: 0.95rem;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-weight: 700; color: #04131e; font-size: .95rem;
     }
+    .nav-link-custom { color: var(--muted) !important; font-size: .95rem; font-weight: 500; }
+    .nav-link-custom:hover,
+    .nav-link-custom.active { color: var(--text) !important; }
 
-    .nav-link-custom {
-      color: var(--muted) !important;
-      font-size: .95rem;
-      font-weight: 500;
-      position: relative;
-    }
-
-    .nav-link-custom:hover, .nav-link-custom.active {
-      color: var(--text) !important;
-    }
-
+    /* ── EYEBROW BADGE ── */
     .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: .8rem;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      border: 1px solid var(--border);
-      border-radius: 50px;
-      padding: 6px 16px;
-      background-color: var(--panel);
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'IBM Plex Mono', monospace; font-size: .78rem;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--accent); border: 1px solid var(--border);
+      border-radius: 50px; padding: 6px 18px;
+      background: linear-gradient(135deg, var(--panel), var(--panel-2));
     }
-
     .pulse {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
       background-color: var(--accent);
-      box-shadow: 0 0 0 0 rgba(0, 180, 216, .6);
+      box-shadow: 0 0 0 0 rgba(0,191,165,.6);
       animation: pulse-effect 2s infinite;
     }
-
     @keyframes pulse-effect {
-      0% { box-shadow: 0 0 0 0 rgba(0, 180, 216, .55); }
-      70% { box-shadow: 0 0 0 9px rgba(0, 180, 216, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(0, 180, 216, 0); }
+      0%   { box-shadow: 0 0 0 0   rgba(0,191,165,.55); }
+      70%  { box-shadow: 0 0 0 9px rgba(0,191,165,0); }
+      100% { box-shadow: 0 0 0 0   rgba(0,191,165,0); }
     }
 
+    /* ── CARDS ── */
     .portfolio-card {
       background-color: var(--panel);
-      border: 1px solid var(--border);
+      border: 1px solid var(--border-dim);
       border-radius: var(--radius);
-      padding: 28px;
-      height: 100%;
+      padding: 28px; height: 100%;
       transition: all .25s ease-in-out;
     }
-
     .portfolio-card:hover {
-      border-color: rgba(0, 180, 216, .35);
+      border-color: rgba(0,191,165,.35);
       transform: translateY(-4px);
-      box-shadow: 0 20px 40px -20px rgba(0, 180, 216, .2);
+      box-shadow: 0 20px 48px -16px rgba(0,191,165,.18);
     }
-
     .icon-box {
-      width: 46px;
-      height: 46px;
-      border-radius: 11px;
-      background-color: var(--accent-soft);
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
+      width: 46px; height: 46px; border-radius: 11px;
+      background-color: var(--accent-soft); color: var(--accent);
+      display: flex; align-items: center; justify-content: center; font-size: 1.25rem;
     }
-
     .tag-pill {
-      display: inline-block;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: .78rem;
-      color: #c2cbd0;
-      background-color: var(--panel-2);
-      border: 1px solid var(--border);
-      padding: 4px 12px;
-      border-radius: 6px;
-      margin-right: 6px;
-      margin-bottom: 6px;
+      display: inline-block; font-family: 'IBM Plex Mono', monospace;
+      font-size: .76rem; color: #a8cdd6;
+      background-color: var(--panel-2); border: 1px solid var(--border-dim);
+      padding: 4px 11px; border-radius: 6px; margin-right: 6px; margin-bottom: 6px;
     }
-
     .comp-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      border: 1px solid var(--border);
-      border-radius: 50px;
-      padding: 10px 20px;
-      font-size: .88rem;
-      color: #dbdee0;
+      display: inline-flex; align-items: center; gap: 10px;
+      border: 1px solid var(--border-dim); border-radius: 50px;
+      padding: 10px 20px; font-size: .88rem; color: #cce5ea;
       background-color: var(--panel);
     }
+    .comp-pill i { color: var(--accent); }
 
-    .comp-pill i {
-      color: var(--accent);
-    }
-
+    /* ── EDITOR WINDOW ── */
     .editor-window {
-      background-color: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: 0 30px 60px -25px rgba(0, 0, 0, .6);
-      overflow: hidden;
+      background-color: var(--panel); border: 1px solid var(--border-dim);
+      border-radius: var(--radius); box-shadow: 0 32px 64px -24px rgba(0,0,0,.7); overflow: hidden;
     }
-
     .editor-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 18px;
-      background-color: var(--panel-2);
-      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 8px;
+      padding: 13px 18px; background-color: var(--panel-2);
+      border-bottom: 1px solid var(--border-dim);
     }
-
-    .editor-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-    }
-
+    .editor-dot { width: 12px; height: 12px; border-radius: 50%; }
     .editor-body {
-      padding: 24px;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: .85rem;
-      line-height: 2;
+      padding: 20px 24px; font-family: 'IBM Plex Mono', monospace;
+      font-size: .82rem; line-height: 1.9;
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
     }
+    .code-ln   { color: #2a4555; display: inline-block; width: 28px; user-select: none; }
+    .code-kw   { color: #4dd9c0; }
+    .code-type { color: #00bfa5; }
+    .code-str  { color: #ffb454; }
+    .code-prop { color: #dff0ec; }
 
-    .code-ln { color: #3a4d56; display: inline-block; width: 28px; user-select: none; }
-    .code-kw { color: #5bc0be; }
-    .code-type { color: #00b4d8; }
-    .code-str { color: #ffb454; }
-    .code-prop { color: #e7eff5; }
-
-    .work-timeline {
-      position: relative;
-      padding-left: 32px;
-      border-left: 2px solid var(--border);
-    }
-
-    .timeline-node {
-      position: relative;
-    }
-
+    /* ── TIMELINE ── */
+    .work-timeline { position: relative; padding-left: 32px; border-left: 2px solid var(--border); }
+    .timeline-node { position: relative; }
     .timeline-node::before {
-      content: "";
-      position: absolute;
-      left: -39px;
-      top: 6px;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background-color: var(--bg);
-      border: 3px solid var(--accent);
+      content: ""; position: absolute; left: -39px; top: 6px;
+      width: 12px; height: 12px; border-radius: 50%;
+      background-color: var(--bg); border: 3px solid var(--accent);
     }
 
-    .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity .6s ease-out, transform .6s ease-out;
+    /* ── REVEAL ANIMATION ── */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .65s ease-out, transform .65s ease-out; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* ════════════════════════════════════════════════
+       MOBILE — ≤ 991px  (phones & small tablets)
+       Everything below is MOBILE-FIRST PREMIUM LAYER
+    ════════════════════════════════════════════════ */
+    @media (max-width: 991.98px) {
+
+      /* ── NAVBAR — always frosted on mobile ── */
+      .navbar-custom {
+        background-color: rgba(7,16,26,.92) !important;
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border-bottom: 1px solid var(--border);
+      }
+
+      /* ── HERO ── */
+      header#home {
+        margin-top: 72px !important;
+        padding-top: 2.5rem !important;
+        padding-bottom: 2rem !important;
+        text-align: center;
+      }
+      header#home .col-lg-7 { display: flex; flex-direction: column; align-items: center; }
+      header#home .eyebrow  { font-size: .72rem; }
+      header#home h1 { font-size: clamp(1.65rem, 7.5vw, 2.5rem); }
+      header#home .lead { font-size: .95rem !important; max-width: 100% !important; }
+      header#home .d-flex.gap-3.flex-wrap { justify-content: center; }
+      header#home .btn { padding: .55rem 1.3rem; font-size: .88rem; }
+
+      /* Hero stat bar — horizontal scroll strip on mobile */
+      .stats-row {
+        display: flex !important;
+        flex-direction: row !important;
+        overflow-x: auto;
+        gap: 0 !important;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 4px;
+      }
+      .stats-row::-webkit-scrollbar { display: none; }
+      .stats-row .col-auto {
+        flex: 0 0 auto;
+        margin-right: 0 !important;
+        padding: 0 1.4rem;
+        border-right: 1px solid var(--border-dim);
+      }
+      .stats-row .col-auto:last-child { border-right: none; }
+      .stats-row h3 { font-size: 1.3rem; margin-bottom: 2px; white-space: nowrap; }
+      .stats-row .small { font-size: .74rem; white-space: nowrap; }
+
+      /* Editor — hidden on phone, replaced by a minimal bio card */
+      .editor-window { display: none; }
+      .mobile-bio-card { display: block !important; }
+
+      /* ── SECTION HEADINGS ── */
+      .display-6 { font-size: 1.55rem !important; }
+      section.py-5.my-5 {
+        padding-top: 2.8rem !important;
+        padding-bottom: 2.8rem !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+      }
+
+      /* ── CARDS ── */
+      .portfolio-card { padding: 18px 16px; }
+
+      /* Skill cards — 2 column grid on mobile */
+      .skills-grid .col-md-6.col-lg-4 {
+        flex: 0 0 50%; max-width: 50%;
+      }
+
+      /* ── TIMELINE ── */
+      .work-timeline { padding-left: 22px; }
+      .timeline-node::before { left: -30px; width: 10px; height: 10px; }
+
+      /* ── COMP PILLS — tighter on mobile ── */
+      .comp-pill { padding: 8px 14px; font-size: .82rem; gap: 7px; }
+
+      /* ── CONTACT SECTION ── */
+      .contact-section-card { padding: 2rem 1.1rem !important; }
+      .contact-section-card h2 { font-size: clamp(1.2rem, 5.5vw, 1.7rem) !important; }
+
+      /* ── FOOTER ── */
+      footer .container { flex-direction: column; align-items: flex-start !important; gap: 1rem !important; }
     }
 
-    .reveal.in {
-      opacity: 1;
-      transform: translateY(0);
+    /* Very small phones < 480px */
+    @media (max-width: 479.98px) {
+      header#home h1 { font-size: clamp(1.45rem, 8vw, 1.85rem); }
+      .skills-grid .col-md-6.col-lg-4 { flex: 0 0 100%; max-width: 100%; }
+      .tag-pill { font-size: .72rem; padding: 3px 9px; }
     }
+
+    /* ── MOBILE BIO CARD (hidden on desktop) ── */
+    .mobile-bio-card { display: none; }
+
+    @media (max-width: 991.98px) {
+      .mobile-bio-card {
+        background: linear-gradient(135deg, var(--panel), var(--panel-2));
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 20px;
+        margin-top: 1.5rem;
+        width: 100%;
+      }
+      .mobile-bio-stat {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border-dim);
+        font-size: .9rem;
+      }
+      .mobile-bio-stat:last-child { border-bottom: none; padding-bottom: 0; }
+      .mobile-bio-stat i { color: var(--accent); font-size: 1rem; width: 20px; text-align: center; flex-shrink: 0; }
+      .mobile-bio-stat span { color: var(--muted); font-size: .8rem; display: block; }
+      .mobile-bio-stat strong { color: var(--text); font-size: .88rem; }
+    }
+
   </style>
 </head>
 <body data-bs-spy="scroll" data-bs-target="#mainNavbar">
@@ -278,7 +323,8 @@
     <div class="container">
       <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="#home">
         <span class="brand-badge">AB</span>
-        <span>Abir Banerjee (Software Engineer)</span>
+        <span class="brand-name">Abir Banerjee</span>
+        <span class="d-none d-sm-inline text-muted fw-normal" style="font-size:.85rem;">(Software Engineer)</span>
       </a>
       <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
         <i class="bi bi-list fs-2"></i>
@@ -316,13 +362,13 @@
     </div>
   </div>
 
-  <header id="home" class="container py-5" style="margin-top: 100px;">
+  <header id="home" class="container py-5" style="margin-top: 90px;">
     <div class="row align-items-center g-5">
       <div class="col-lg-7">
         <div class="mb-3">
           <span class="eyebrow"><span class="pulse"></span> Open for Opportunities</span>
         </div>
-        <h1 class="display-4 fw-bold lh-sm mb-3">
+        <h1 class="fw-bold lh-sm mb-3" style="font-size: clamp(1.75rem, 5.5vw, 3rem);">
           Hi, I'm Abir Banerjee —<br>Full Stack <span class="text-info">.NET</span> Developer
         </h1>
         <p class="lead text-secondary mb-4 fs-5" style="max-width: 600px;">
@@ -342,7 +388,7 @@
           </a>
         </div>
 
-        <div class="row g-4 border-top border-secondary border-opacity-25 pt-4">
+        <div class="row g-4 stats-row border-top border-secondary border-opacity-25 pt-4">
           <div class="col-auto me-4">
             <h3 class="fw-bold mb-0">2.7+</h3>
             <span class="small text-secondary">Years of Experience</span>
@@ -378,6 +424,30 @@
             <div><span class="code-ln">10</span>  <span class="code-prop">Location</span> = <span class="code-str">"Kolkata, India"</span>,</div>
             <div><span class="code-ln">11</span>  <span class="code-prop">OpenToWork</span> = <span class="code-kw">true</span></div>
             <div><span class="code-ln">12</span>}</div>
+          </div>
+        </div>
+
+        <!-- Mobile-only quick-info card (editor is hidden on mobile) -->
+        <div class="mobile-bio-card">
+          <div class="mobile-bio-stat">
+            <i class="bi bi-briefcase-fill"></i>
+            <div><span>Current Role</span><strong>Software Developer — Score IT Ltd.</strong></div>
+          </div>
+          <div class="mobile-bio-stat">
+            <i class="bi bi-layers-fill"></i>
+            <div><span>Core Stack</span><strong>C# · .NET Core · ASP.NET API · SQL</strong></div>
+          </div>
+          <div class="mobile-bio-stat">
+            <i class="bi bi-graph-up-arrow"></i>
+            <div><span>Experience</span><strong>2.7+ Years · Enterprise Systems</strong></div>
+          </div>
+          <div class="mobile-bio-stat">
+            <i class="bi bi-geo-alt-fill"></i>
+            <div><span>Location</span><strong>Kolkata, India</strong></div>
+          </div>
+          <div class="mobile-bio-stat">
+            <i class="bi bi-circle-fill text-info" style="font-size:.6rem;"></i>
+            <div><span>Status</span><strong style="color:var(--accent);">Open to Opportunities</strong></div>
           </div>
         </div>
       </div>
@@ -432,7 +502,7 @@
         <h2 class="fw-bold display-6">Technical Competency</h2>
       </div>
       
-      <div class="row g-4 reveal">
+      <div class="row g-4 reveal skills-grid">
         <div class="col-md-6 col-lg-4">
           <div class="portfolio-card">
             <div class="icon-box mb-4"><i class="bi bi-code-slash"></i></div>
@@ -495,8 +565,6 @@
         <div class="comp-pill"><i class="bi bi-check-circle-fill"></i> Dynamic Database Query Optimization</div>
         <div class="comp-pill"><i class="bi bi-check-circle-fill"></i> Agile Team Mentorship &amp; Debug Execution</div>
       </div>
-    </div>
-  </section>
 
   <section id="experience" class="py-5 my-5">
     <div class="container">
@@ -563,7 +631,7 @@
         <h2 class="fw-bold display-6">Education</h2>
       </div>
       <div class="row g-4 reveal">
-        <div class="col-lg-4">
+        <div class="col-12 col-md-6 col-lg-4">
           <div class="portfolio-card">
             <span class="text-info mono small d-block mb-2">2019 — 2023</span>
             <h5 class="fw-bold text-white mb-1">B.Tech, Computer Science &amp; Engineering</h5>
@@ -571,7 +639,7 @@
             <div class="border-top border-secondary border-opacity-25 pt-2 mt-auto text-secondary mono small">Score: 7.8 CGPA</div>
           </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-12 col-md-6 col-lg-4">
           <div class="portfolio-card">
             <span class="text-info mono small d-block mb-2">2019</span>
             <h5 class="fw-bold text-white mb-1">Higher Secondary (Class XII)</h5>
@@ -579,7 +647,7 @@
             <div class="border-top border-secondary border-opacity-25 pt-2 mt-auto text-secondary mono small">Score: 65.2%</div>
           </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-12 col-md-6 col-lg-4">
           <div class="portfolio-card">
             <span class="text-info mono small d-block mb-2">2017</span>
             <h5 class="fw-bold text-white mb-1">Secondary (Class X)</h5>
@@ -592,47 +660,47 @@
   </section>
 
   <section id="contact" class="container py-5 my-5">
-    <div class="portfolio-card text-center py-5 px-4 reveal" style="background: linear-gradient(135deg, var(--panel) 0%, var(--panel-2) 100%);">
+    <div class="portfolio-card contact-section-card text-center py-5 px-3 px-md-5 reveal" style="background: linear-gradient(135deg, var(--panel) 0%, var(--panel-2) 100%);">
       <span class="text-info mono small d-block mb-2">Inquiries</span>
-      <h2 class="fw-bold display-6 text-white mb-3">Let's Construct Something Exceptional</h2>
-      <p class="text-secondary mx-auto mb-5" style="max-width: 500px;">
+      <h2 class="fw-bold text-white mb-3" style="font-size: clamp(1.4rem, 4.5vw, 2.2rem);">Let's Construct Something Exceptional</h2>
+      <p class="text-secondary mx-auto mb-4 mb-md-5" style="max-width: 500px; font-size: .95rem;">
         I am currently evaluating strategic .NET software engineering opportunities. Reach out via any of the professional gateways below.
       </p>
       
-      <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3 justify-content-center">
+      <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-5 g-3 justify-content-center">
         <div class="col">
           <a href="tel:+919073830606" class="portfolio-card bg-dark bg-opacity-25 d-flex flex-column align-items-center justify-content-center p-3 text-white h-100">
             <i class="bi bi-telephone-fill text-info mb-2 fs-4"></i>
             <span class="fw-bold small">+91 9073830606</span>
-            <span class="text-secondary text-center small mt-1" style="font-size: 0.75rem;">Voice Call</span>
+            <span class="text-secondary text-center mt-1" style="font-size: 0.72rem;">Voice Call</span>
           </a>
         </div>
         <div class="col">
           <a href="https://wa.me/919073830606" target="_blank" class="portfolio-card bg-dark bg-opacity-25 d-flex flex-column align-items-center justify-content-center p-3 text-white h-100">
             <i class="bi bi-whatsapp text-info mb-2 fs-4"></i>
             <span class="fw-bold small">+91 9073830606</span>
-            <span class="text-secondary text-center small mt-1" style="font-size: 0.75rem;">WhatsApp</span>
+            <span class="text-secondary text-center mt-1" style="font-size: 0.72rem;">WhatsApp</span>
           </a>
         </div>
         <div class="col">
           <a href="mailto:banerjeeabir273@gmail.com" class="portfolio-card bg-dark bg-opacity-25 d-flex flex-column align-items-center justify-content-center p-3 text-white h-100">
             <i class="bi bi-envelope-fill text-info mb-2 fs-4"></i>
-            <span class="fw-bold small">banerjeeabir273</span>
-            <span class="text-secondary text-center small mt-1" style="font-size: 0.75rem;">Email</span>
+            <span class="fw-bold small" style="word-break:break-all;">banerjeeabir273</span>
+            <span class="text-secondary text-center mt-1" style="font-size: 0.72rem;">Email</span>
           </a>
         </div>
         <div class="col">
           <a href="https://in.linkedin.com/in/abir-banerjee-30267b212" target="_blank" class="portfolio-card bg-dark bg-opacity-25 d-flex flex-column align-items-center justify-content-center p-3 text-white h-100">
             <i class="bi bi-linkedin text-info mb-2 fs-4"></i>
             <span class="fw-bold small">abir-banerjee</span>
-            <span class="text-secondary text-center small mt-1" style="font-size: 0.75rem;">LinkedIn Profile</span>
+            <span class="text-secondary text-center mt-1" style="font-size: 0.72rem;">LinkedIn</span>
           </a>
         </div>
         <div class="col">
           <div class="portfolio-card bg-dark bg-opacity-25 d-flex flex-column align-items-center justify-content-center p-3 text-white h-100">
             <i class="bi bi-geo-alt-fill text-info mb-2 fs-4"></i>
             <span class="fw-bold small">Kolkata, India</span>
-            <span class="text-secondary text-center small mt-1" style="font-size: 0.75rem;">Location Context</span>
+            <span class="text-secondary text-center mt-1" style="font-size: 0.72rem;">Location</span>
           </div>
         </div>
       </div>
