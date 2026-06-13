@@ -1,757 +1,677 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Abir Banerjee &mdash; Full Stack .NET Developer</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abir Banerjee — Full Stack .NET Developer</title>
 
-<!-- Bootstrap 5 -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-<style>
-:root{
-  --bg:#0a1120;
-  --bg-soft:#0d1626;
-  --panel:#121d33;
-  --panel-2:#19273f;
-  --border:rgba(255,255,255,.08);
-  --text:#e7ecf5;
-  --muted:#92a0bb;
-  --accent:#2dd7c4;
-  --accent-2:#7aa2ff;
-  --accent-soft:rgba(45,215,196,.12);
-  --amber:#ffb454;
-  --radius:14px;
-  --maxw:1140px;
-}
+  <style>
+    :root {
+      --bg: #09141a;
+      --bg-soft: #0c1b23;
+      --panel: #112531;
+      --panel-2: #183344;
+      --border: rgba(255, 255, 255, .08);
+      --text: #e7eff5;
+      --muted: #92aab5;
+      --accent: #00b4d8; /* Ocean Blue Green */
+      --accent-2: #0077b6; /* Deep Sea Teal */
+      --accent-soft: rgba(0, 180, 216, .12);
+      --radius: 14px;
+    }
 
-*{box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:'IBM Plex Sans', sans-serif;
-  font-size:16px;
-  line-height:1.7;
-  -webkit-font-smoothing:antialiased;
-}
-h1,h2,h3,h4,.brand,.nav-link,.btn{
-  font-family:'Space Grotesk', sans-serif;
-}
-.mono{font-family:'IBM Plex Mono', monospace;}
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
 
-a{color:var(--accent); text-decoration:none;}
-a:hover{color:var(--accent-2);}
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
 
-::selection{background:var(--accent-soft); color:var(--text);}
+    h1, h2, h3, h4, .navbar-brand, .nav-link, .btn {
+      font-family: 'Space Grotesk', sans-serif;
+    }
 
-/* Background ambience */
-body::before{
-  content:"";
-  position:fixed; inset:0; z-index:-2;
-  background:
-    radial-gradient(900px 500px at 85% -10%, rgba(45,215,196,.10), transparent 60%),
-    radial-gradient(700px 450px at -10% 30%, rgba(122,162,255,.08), transparent 60%),
-    var(--bg);
-}
-body::after{
-  content:"";
-  position:fixed; inset:0; z-index:-1; pointer-events:none;
-  background-image:
-    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
-  background-size:42px 42px;
-  mask-image:radial-gradient(900px 600px at 80% 0%, rgba(0,0,0,.5), transparent 70%);
-}
+    .mono {
+      font-family: 'IBM Plex Mono', monospace;
+    }
 
-.container-narrow{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color .2s ease-in-out;
+    }
 
-/* ---------- NAVBAR ---------- */
-.navbar-custom{
-  position:fixed; top:0; left:0; right:0; z-index:1000;
-  background:rgba(10,17,32,0); border-bottom:1px solid transparent;
-  transition:.35s ease;
-  padding:18px 0;
-}
-.navbar-custom.scrolled{
-  background:rgba(10,17,32,.78);
-  -webkit-backdrop-filter:blur(14px);
-  backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--border);
-  padding:12px 0;
-}
-.navbar-custom .container-narrow{
-  display:flex; align-items:center; justify-content:space-between;
-}
-.brand{
-  font-weight:700; font-size:1.25rem; color:var(--text); letter-spacing:.5px;
-  display:flex; align-items:center; gap:10px;
-}
-.brand .dot{color:var(--accent);}
-.brand-badge{
-  width:38px; height:38px; border-radius:10px;
-  background:linear-gradient(135deg, var(--accent), var(--accent-2));
-  display:flex; align-items:center; justify-content:center;
-  font-family:'Space Grotesk',sans-serif; font-weight:700; color:#06121f; font-size:1rem;
-}
-.nav-links{display:flex; align-items:center; gap:28px;}
-.nav-links a{
-  color:var(--muted); font-size:.92rem; font-weight:500; position:relative; padding:4px 0;
-}
-.nav-links a::after{
-  content:""; position:absolute; left:0; bottom:-4px; width:0; height:2px;
-  background:var(--accent); transition:.25s ease;
-}
-.nav-links a:hover{color:var(--text);}
-.nav-links a:hover::after{width:100%;}
-.btn-resume{
-  border:1px solid var(--accent); color:var(--accent) !important; border-radius:999px;
-  padding:8px 20px; font-size:.88rem; font-weight:600;
-}
-.btn-resume:hover{background:var(--accent-soft);}
-.navbar-toggler{border:none; color:var(--text); font-size:1.4rem; background:none;}
+    a:hover {
+      color: var(--accent-2);
+    }
 
-/* ---------- HERO ---------- */
-.hero{
-  padding:160px 0 90px;
-  display:grid; grid-template-columns:1.05fr .95fr; gap:60px; align-items:center;
-}
-.eyebrow{
-  display:inline-flex; align-items:center; gap:10px;
-  font-family:'IBM Plex Mono',monospace; font-size:.82rem; letter-spacing:.18em;
-  text-transform:uppercase; color:var(--accent);
-  border:1px solid var(--border); border-radius:999px; padding:6px 14px;
-  background:var(--panel);
-}
-.eyebrow .pulse{
-  width:8px; height:8px; border-radius:50%; background:var(--accent);
-  box-shadow:0 0 0 0 rgba(45,215,196,.6);
-  animation:pulse 2s infinite;
-}
-@keyframes pulse{
-  0%{box-shadow:0 0 0 0 rgba(45,215,196,.55);}
-  70%{box-shadow:0 0 0 9px rgba(45,215,196,0);}
-  100%{box-shadow:0 0 0 0 rgba(45,215,196,0);}
-}
-.hero h1{
-  font-size:clamp(2.6rem, 5vw, 3.8rem); font-weight:700; line-height:1.08;
-  margin:22px 0 14px;
-}
-.hero h1 span{color:var(--accent);}
-.hero p.lead-text{
-  color:var(--muted); font-size:1.08rem; max-width:540px; margin-bottom:30px;
-}
-.hero-actions{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:42px;}
-.btn-primary-custom{
-  background:var(--accent); color:#04201c; font-weight:600; border-radius:10px;
-  padding:13px 26px; border:none; font-size:.95rem; display:inline-flex; align-items:center; gap:8px;
-  transition:.2s ease;
-}
-.btn-primary-custom:hover{background:var(--accent-2); color:#06121f; transform:translateY(-2px);}
-.btn-outline-custom{
-  border:1px solid var(--border); color:var(--text); border-radius:10px;
-  padding:13px 26px; font-size:.95rem; font-weight:600; display:inline-flex; align-items:center; gap:8px;
-  transition:.2s ease;
-}
-.btn-outline-custom:hover{border-color:var(--accent); color:var(--accent); transform:translateY(-2px);}
+    /* Ambient Decorative Gradients */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background: radial-gradient(900px 500px at 85% -10%, rgba(0, 180, 216, .10), transparent 60%),
+                  radial-gradient(700px 450px at -10% 30%, rgba(0, 119, 182, .08), transparent 60%),
+                  var(--bg);
+    }
 
-.hero-stats{display:flex; gap:34px; flex-wrap:wrap;}
-.hero-stats .stat-num{
-  font-family:'Space Grotesk',sans-serif; font-size:1.7rem; font-weight:700; color:var(--text);
-}
-.hero-stats .stat-label{color:var(--muted); font-size:.82rem; margin-top:2px;}
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image: linear-gradient(rgba(255, 255, 255, .02) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255, 255, 255, .02) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: radial-gradient(900px 600px at 80% 0%, rgba(0, 0, 0, .5), transparent 70%);
+    }
 
-/* Code editor signature */
-.editor{
-  background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
-  box-shadow:0 30px 60px -25px rgba(0,0,0,.6);
-  overflow:hidden;
-}
-.editor-top{
-  display:flex; align-items:center; gap:8px; padding:12px 16px;
-  background:var(--panel-2); border-bottom:1px solid var(--border);
-}
-.editor-dot{width:11px; height:11px; border-radius:50%;}
-.editor-top .filename{
-  margin-left:10px; font-family:'IBM Plex Mono',monospace; font-size:.78rem; color:var(--muted);
-}
-.editor-body{padding:22px 24px; font-family:'IBM Plex Mono',monospace; font-size:.85rem; line-height:1.95;}
-.editor-body .ln{color:#3a4a6b; display:inline-block; width:26px; user-select:none;}
-.code-kw{color:#7aa2ff;}
-.code-type{color:#2dd7c4;}
-.code-str{color:#ffb454;}
-.code-fn{color:#c792ea;}
-.code-com{color:#5a6c8c;}
-.code-prop{color:#e7ecf5;}
-.caret{
-  display:inline-block; width:7px; height:1.1em; background:var(--accent);
-  vertical-align:middle; margin-left:3px; animation:blink 1s step-end infinite;
-}
-@keyframes blink{50%{opacity:0;}}
+    /* Professional Navbar Customizations */
+    .navbar-custom {
+      background-color: transparent;
+      border-bottom: 1px solid transparent;
+      transition: all .35s ease-in-out;
+    }
 
-/* ---------- SECTION SHELL ---------- */
-section{padding:100px 0;}
-.section-head{margin-bottom:50px; max-width:680px;}
-.section-tag{
-  font-family:'IBM Plex Mono',monospace; font-size:.78rem; letter-spacing:.18em;
-  text-transform:uppercase; color:var(--accent); margin-bottom:10px; display:block;
-}
-.section-head h2{font-size:clamp(1.9rem,3.4vw,2.5rem); font-weight:700;}
-.section-head p{color:var(--muted); margin-top:10px;}
+    .navbar-custom.scrolled {
+      background-color: rgba(9, 20, 26, .85) !important;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
 
-/* ---------- ABOUT ---------- */
-.about-wrap{display:grid; grid-template-columns:1.4fr .9fr; gap:50px; align-items:start;}
-.about-text p{color:#c2cce0; font-size:1.02rem;}
-.about-text p + p{margin-top:16px;}
-.facts-card{
-  background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
-  padding:28px;
-}
-.facts-card h4{font-size:1rem; margin-bottom:18px; color:var(--text); font-weight:600;}
-.fact-row{
-  display:flex; justify-content:space-between; gap:12px;
-  padding:11px 0; border-bottom:1px solid var(--border); font-size:.92rem;
-}
-.fact-row:last-child{border-bottom:none; padding-bottom:0;}
-.fact-row span:first-child{color:var(--muted);}
-.fact-row span:last-child{font-weight:500; text-align:right;}
+    .brand-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #05131a;
+      font-size: 0.95rem;
+    }
 
-/* ---------- SKILLS ---------- */
-.skill-card{
-  background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
-  padding:26px; height:100%; transition:.25s ease;
-}
-.skill-card:hover{
-  border-color:rgba(45,215,196,.35); transform:translateY(-4px);
-  box-shadow:0 18px 40px -28px rgba(45,215,196,.45);
-}
-.skill-card .icon-box{
-  width:46px; height:46px; border-radius:11px; background:var(--accent-soft);
-  color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:1.25rem; margin-bottom:16px;
-}
-.skill-card h5{font-size:1.02rem; font-weight:600; margin-bottom:12px;}
-.tag{
-  display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:.76rem;
-  color:#c2cce0; background:var(--panel-2); border:1px solid var(--border);
-  padding:5px 11px; border-radius:6px; margin:0 6px 6px 0;
-}
+    .nav-link-custom {
+      color: var(--muted) !important;
+      font-size: .95rem;
+      font-weight: 500;
+      position: relative;
+    }
 
-.comp-grid{display:flex; flex-wrap:wrap; gap:12px; margin-top:36px;}
-.comp-pill{
-  display:flex; align-items:center; gap:10px;
-  border:1px solid var(--border); border-radius:999px; padding:10px 18px;
-  font-size:.88rem; color:#dbe2f0; background:var(--panel);
-}
-.comp-pill i{color:var(--accent);}
+    .nav-link-custom:hover, .nav-link-custom.active {
+      color: var(--text) !important;
+    }
 
-/* ---------- EXPERIENCE ---------- */
-.timeline{position:relative; padding-left:36px; border-left:2px solid var(--border);}
-.timeline-item{position:relative; margin-bottom:14px;}
-.timeline-item::before{
-  content:""; position:absolute; left:-43px; top:6px;
-  width:14px; height:14px; border-radius:50%;
-  background:var(--bg); border:3px solid var(--accent);
-}
-.job-head{display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:8px; margin-bottom:6px;}
-.job-head h3{font-size:1.25rem; font-weight:700;}
-.job-head .role{color:var(--accent); font-family:'IBM Plex Mono',monospace; font-size:.88rem;}
-.job-head .period{
-  font-family:'IBM Plex Mono',monospace; font-size:.82rem; color:var(--muted);
-  border:1px solid var(--border); padding:5px 12px; border-radius:999px; white-space:nowrap;
-}
+    /* Eyebrow Status Element */
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .8rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 6px 16px;
+      background-color: var(--panel);
+    }
 
-.project-card{
-  background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
-  padding:28px; margin-top:26px;
-}
-.project-card .project-title{
-  display:flex; align-items:center; gap:10px; font-size:1.08rem; font-weight:700; margin-bottom:6px;
-}
-.project-card .project-title i{color:var(--accent); font-size:1.2rem;}
-.project-card .stack-row{margin:10px 0 16px;}
-.project-card ul{margin:0; padding-left:20px; color:#c2cce0;}
-.project-card ul li{margin-bottom:8px; font-size:.94rem;}
-.project-card ul li::marker{color:var(--accent);}
+    .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--accent);
+      box-shadow: 0 0 0 0 rgba(0, 180, 216, .6);
+      animation: pulse-effect 2s infinite;
+    }
 
-.achv-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:48px;}
-.achv-card{
-  background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:24px;
-}
-.achv-card i{color:var(--accent); font-size:1.4rem; margin-bottom:12px; display:block;}
-.achv-card p{font-size:.9rem; color:#c2cce0; margin:0;}
+    @keyframes pulse-effect {
+      0% { box-shadow: 0 0 0 0 rgba(0, 180, 216, .55); }
+      70% { box-shadow: 0 0 0 9px rgba(0, 180, 216, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 180, 216, 0); }
+    }
 
-/* ---------- EDUCATION ---------- */
-.edu-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
-.edu-card{
-  background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
-  padding:26px; position:relative; overflow:hidden;
-}
-.edu-card .edu-year{
-  font-family:'IBM Plex Mono',monospace; font-size:.78rem; color:var(--accent);
-  letter-spacing:.08em; margin-bottom:10px; display:block;
-}
-.edu-card h5{font-size:1.02rem; font-weight:600; margin-bottom:6px;}
-.edu-card .school{color:var(--muted); font-size:.88rem; margin-bottom:14px;}
-.edu-card .score{
-  font-family:'IBM Plex Mono',monospace; font-size:.88rem; color:var(--text);
-  border-top:1px solid var(--border); padding-top:12px;
-}
+    /* Core Architectural Cards */
+    .portfolio-card {
+      background-color: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      height: 100%;
+      transition: all .25s ease-in-out;
+    }
 
-/* ---------- CONTACT ---------- */
-.contact-panel{
-  background:linear-gradient(135deg, var(--panel) 0%, var(--panel-2) 100%);
-  border:1px solid var(--border); border-radius:20px;
-  padding:60px 50px; text-align:center; position:relative; overflow:hidden;
-}
-.contact-panel::before{
-  content:""; position:absolute; width:380px; height:380px; border-radius:50%;
-  background:radial-gradient(circle, rgba(45,215,196,.18), transparent 70%);
-  top:-150px; right:-120px;
-}
-.contact-panel h2{font-size:clamp(1.8rem,3.6vw,2.6rem); font-weight:700; margin-bottom:14px;}
-.contact-panel p{color:var(--muted); max-width:520px; margin:0 auto 34px;}
-.contact-grid{
-  display:grid; grid-template-columns:repeat(5,1fr); gap:16px; max-width:920px; margin:0 auto;
-}
-.contact-chip{
-  background:var(--bg-soft); border:1px solid var(--border); border-radius:14px;
-  padding:22px 12px; display:flex; flex-direction:column; align-items:center; gap:10px;
-  color:var(--text); transition:.2s ease;
-}
-.contact-chip:hover{border-color:var(--accent); transform:translateY(-4px); color:var(--text);}
-.contact-chip i{font-size:1.5rem; color:var(--accent);}
-.contact-chip span{font-size:.78rem; color:var(--muted); text-align:center; line-height:1.4;}
-.contact-chip strong{font-size:.85rem; word-break:break-word;}
+    .portfolio-card:hover {
+      border-color: rgba(0, 180, 216, .35);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -20px rgba(0, 180, 216, .2);
+    }
 
-footer{padding:34px 0; border-top:1px solid var(--border); margin-top:40px;}
-footer .container-narrow{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;}
-footer p{color:var(--muted); font-size:.85rem; margin:0;}
-footer .socials a{color:var(--muted); font-size:1.1rem; margin-left:16px;}
-footer .socials a:hover{color:var(--accent);}
+    .icon-box {
+      width: 46px;
+      height: 46px;
+      border-radius: 11px;
+      background-color: var(--accent-soft);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
 
-/* Scroll-reveal */
-.reveal{opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease;}
-.reveal.in{opacity:1; transform:translateY(0);}
+    /* Micro-pills */
+    .tag-pill {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .78rem;
+      color: #c2cbd0;
+      background-color: var(--panel-2);
+      border: 1px solid var(--border);
+      padding: 4px 12px;
+      border-radius: 6px;
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
 
-/* ---------- RESPONSIVE ---------- */
-@media (max-width:991px){
-  .hero{grid-template-columns:1fr; padding-top:140px;}
-  .about-wrap{grid-template-columns:1fr;}
-  .edu-grid{grid-template-columns:1fr;}
-  .achv-grid{grid-template-columns:1fr;}
-  .contact-grid{grid-template-columns:repeat(2,1fr);}
-  .nav-links{display:none;}
-}
-@media (max-width:575px){
-  .hero{padding-top:120px;}
-  .contact-panel{padding:40px 22px;}
-  .contact-grid{grid-template-columns:repeat(2,1fr);}
-  section{padding:70px 0;}
-}
-</style>
+    .comp-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 10px 20px;
+      font-size: .88rem;
+      color: #dbdee0;
+      background-color: var(--panel);
+    }
+
+    .comp-pill i {
+      color: var(--accent);
+    }
+
+    /* Native Code Window Component */
+    .editor-window {
+      background-color: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 30px 60px -25px rgba(0, 0, 0, .6);
+      overflow: hidden;
+    }
+
+    .editor-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 18px;
+      background-color: var(--panel-2);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .editor-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .editor-body {
+      padding: 24px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .85rem;
+      line-height: 2;
+    }
+
+    .code-ln { color: #3a4d56; display: inline-block; width: 28px; user-select: none; }
+    .code-kw { color: #5bc0be; }
+    .code-type { color: #00b4d8; }
+    .code-str { color: #ffb454; }
+    .code-prop { color: #e7eff5; }
+
+    /* Timeline Mechanics */
+    .work-timeline {
+      position: relative;
+      padding-left: 32px;
+      border-left: 2px solid var(--border);
+    }
+
+    .timeline-node {
+      position: relative;
+    }
+
+    .timeline-node::before {
+      content: "";
+      position: absolute;
+      left: -39px;
+      top: 6px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: var(--bg);
+      border: 3px solid var(--accent);
+    }
+
+    /* Animation Reveal State */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .6s ease-out, transform .6s ease-out;
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
-<body>
+<body data-bs-spy="scroll" data-bs-target="#mainNavbar">
 
-<!-- ============ NAVBAR ============ -->
-<nav class="navbar-custom" id="navbar">
-  <div class="container-narrow">
-    <a href="#home" class="brand">
-      <span class="brand-badge">AB</span>
-      Abir<span class="dot">.</span>dev
-    </a>
-    <div class="nav-links">
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#experience">Experience</a>
-      <a href="#projects">Projects</a>
-      <a href="#education">Education</a>
-      <a href="#contact" class="btn-resume">Contact Me</a>
-    </div>
-    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileNav">
-      <i class="bi bi-list"></i>
-    </button>
-  </div>
-</nav>
-
-<!-- Mobile offcanvas menu -->
-<div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="mobileNav" style="background:var(--panel); width:240px;">
-  <div class="offcanvas-header">
-    <h5 class="brand mb-0">Abir<span class="dot">.</span>dev</h5>
-    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
-  </div>
-  <div class="offcanvas-body d-flex flex-column gap-3">
-    <a href="#about" data-bs-dismiss="offcanvas" class="text-light">About</a>
-    <a href="#skills" data-bs-dismiss="offcanvas" class="text-light">Skills</a>
-    <a href="#experience" data-bs-dismiss="offcanvas" class="text-light">Experience</a>
-    <a href="#projects" data-bs-dismiss="offcanvas" class="text-light">Projects</a>
-    <a href="#education" data-bs-dismiss="offcanvas" class="text-light">Education</a>
-    <a href="#contact" data-bs-dismiss="offcanvas" class="text-light">Contact</a>
-  </div>
-</div>
-
-<!-- ============ HERO ============ -->
-<header class="container-narrow hero" id="home">
-  <div>
-    <span class="eyebrow"><span class="pulse"></span> Available for new opportunities</span>
-    <h1>Hi, I'm Abir Banerjee &mdash;<br>Full Stack <span>.NET</span> Developer</h1>
-    <p class="lead-text">
-      I design, build and maintain enterprise-grade web applications with
-      <strong>.NET Core, ASP.NET Core Web API, C#, SQL Server &amp; MySQL</strong> &mdash;
-      turning multi-client CRM and ERP requirements into fast, reliable, production-ready software.
-    </p>
-    <div class="hero-actions">
-      <a href="mailto:banerjeeabir273@gmail.com" class="btn-primary-custom"><i class="bi bi-envelope-fill"></i> Get in Touch</a>
-      <a href="https://in.linkedin.com/in/abir-banerjee-30267b212" target="_blank" class="btn-outline-custom"><i class="bi bi-linkedin"></i> View LinkedIn</a>
-    </div>
-    <div class="hero-stats">
-      <div>
-        <div class="stat-num">2.7+</div>
-        <div class="stat-label">Years of Experience</div>
-      </div>
-      <div>
-        <div class="stat-num">2</div>
-        <div class="stat-label">Enterprise Platforms Built</div>
-      </div>
-      <div>
-        <div class="stat-num">Multi</div>
-        <div class="stat-label">Client &amp; DB Architecture</div>
-      </div>
-    </div>
-  </div>
-
-  <div>
-    <div class="editor">
-      <div class="editor-top">
-        <span class="editor-dot" style="background:#ff5f57;"></span>
-        <span class="editor-dot" style="background:#febc2e;"></span>
-        <span class="editor-dot" style="background:#28c840;"></span>
-        <span class="filename">Developer.cs</span>
-      </div>
-      <div class="editor-body">
-<span class="ln">1</span><span class="code-kw">public class</span> <span class="code-type">Developer</span><br>
-<span class="ln">2</span>{<br>
-<span class="ln">3</span>&nbsp;&nbsp;<span class="code-prop">Name</span> = <span class="code-str">"Abir Banerjee"</span>,<br>
-<span class="ln">4</span>&nbsp;&nbsp;<span class="code-prop">Role</span> = <span class="code-str">"Full Stack .NET Developer"</span>,<br>
-<span class="ln">5</span>&nbsp;&nbsp;<span class="code-prop">Experience</span> = <span class="code-str">"2.7+ years"</span>,<br>
-<span class="ln">6</span>&nbsp;&nbsp;<span class="code-prop">Stack</span> = <span class="code-kw">new</span>[] {<br>
-<span class="ln">7</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-str">"C#"</span>, <span class="code-str">".NET Core"</span>, <span class="code-str">"ASP.NET Core"</span>,<br>
-<span class="ln">8</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-str">"SQL Server"</span>, <span class="code-str">"MySQL"</span>, <span class="code-str">"JS"</span><br>
-<span class="ln">9</span>&nbsp;&nbsp;},<br>
-<span class="ln">10</span>&nbsp;&nbsp;<span class="code-prop">Location</span> = <span class="code-str">"Kolkata, India"</span>,<br>
-<span class="ln">11</span>&nbsp;&nbsp;<span class="code-prop">OpenToWork</span> = <span class="code-kw">true</span><span class="caret"></span><br>
-<span class="ln">12</span>}
-      </div>
-    </div>
-  </div>
-</header>
-
-<!-- ============ ABOUT ============ -->
-<section id="about">
-  <div class="container-narrow">
-    <div class="section-head reveal">
-      <span class="section-tag">// 01 &mdash; About</span>
-      <h2>Building reliable software, one query at a time</h2>
-    </div>
-    <div class="about-wrap reveal">
-      <div class="about-text">
-        <p>
-          I'm a results-driven Full Stack .NET Developer with <strong>2.7+ years of experience</strong> designing,
-          developing and maintaining enterprise-grade web applications using .NET Core, ASP.NET Core Web API, C#,
-          JavaScript, HTML/CSS, SQL Server, MySQL and PL/SQL.
-        </p>
-        <p>
-          I have a proven track record of building scalable CRM and ERP solutions, managing multi-client and
-          multi-database environments, and optimising complex SQL queries to improve application performance.
-          I'm adept at collaborating directly with stakeholders to translate business requirements into robust,
-          production-ready software, and at providing technical leadership to resolve complex engineering
-          challenges within Agile teams.
-        </p>
-        <p>
-          I'm currently looking to leverage my full-stack development, database optimisation and client-management
-          skills in a dynamic role within a global consulting / technology environment.
-        </p>
-      </div>
-      <div class="facts-card">
-        <h4><i class="bi bi-person-badge"></i>&nbsp; Quick Facts</h4>
-        <div class="fact-row"><span>Location</span><span>Kolkata, West Bengal, India</span></div>
-        <div class="fact-row"><span>Current Role</span><span>Software Developer</span></div>
-        <div class="fact-row"><span>Company</span><span>Score Information Technologies Ltd.</span></div>
-        <div class="fact-row"><span>Experience</span><span>2.7+ Years</span></div>
-        <div class="fact-row"><span>Education</span><span>B.Tech, CSE</span></div>
-        <div class="fact-row"><span>Languages</span><span>English, Hindi, Bengali</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ SKILLS ============ -->
-<section id="skills" style="background:var(--bg-soft);">
-  <div class="container-narrow">
-    <div class="section-head reveal">
-      <span class="section-tag">// 02 &mdash; Skills</span>
-      <h2>Technical Skill Set</h2>
-      <p>The languages, frameworks, tools and concepts I use to design and ship full-stack .NET applications.</p>
-    </div>
-
-    <div class="row g-4 reveal">
-      <div class="col-md-6 col-lg-4">
-        <div class="skill-card">
-          <div class="icon-box"><i class="bi bi-code-slash"></i></div>
-          <h5>Languages</h5>
-          <div>
-            <span class="tag">C#</span><span class="tag">SQL</span><span class="tag">JavaScript</span>
-            <span class="tag">HTML5</span><span class="tag">CSS3</span>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="skill-card">
-          <div class="icon-box"><i class="bi bi-layers"></i></div>
-          <h5>Frameworks</h5>
-          <div>
-            <span class="tag">.NET</span><span class="tag">.NET Core</span>
-            <span class="tag">ASP.NET Core MVC</span><span class="tag">ASP.NET Core Web API</span>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="skill-card">
-          <div class="icon-box"><i class="bi bi-database"></i></div>
-          <h5>Databases</h5>
-          <div>
-            <span class="tag">SQL Server</span><span class="tag">MySQL</span><span class="tag">PL/SQL</span>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="skill-card">
-          <div class="icon-box"><i class="bi bi-diagram-3"></i></div>
-          <h5>Concepts &amp; Architecture</h5>
-          <div>
-            <span class="tag">REST APIs</span><span class="tag">Query Optimisation</span>
-            <span class="tag">Multi-tenant Architecture</span><span class="tag">ERP Systems</span>
-            <span class="tag">CRM Systems</span>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="skill-card">
-          <div class="icon-box"><i class="bi bi-tools"></i></div>
-          <h5>Tools</h5>
-          <div>
-            <span class="tag">Visual Studio</span><span class="tag">SVN / Git</span>
-            <span class="tag">Postman</span><span class="tag">SSMS</span><span class="tag">MySQL Workbench</span>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="skill-card">
-          <div class="icon-box"><i class="bi bi-translate"></i></div>
-          <h5>Languages Known</h5>
-          <div>
-            <span class="tag">English</span><span class="tag">Hindi</span><span class="tag">Bengali</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="comp-grid reveal">
-      <div class="comp-pill"><i class="bi bi-people-fill"></i> Stakeholder Communication</div>
-      <div class="comp-pill"><i class="bi bi-clipboard-check"></i> Requirement Analysis</div>
-      <div class="comp-pill"><i class="bi bi-diagram-2"></i> Technical Leadership</div>
-      <div class="comp-pill"><i class="bi bi-kanban"></i> Team Collaboration &amp; Problem Solving</div>
-      <div class="comp-pill"><i class="bi bi-hdd-network"></i> Multi-Client DB Management</div>
-      <div class="comp-pill"><i class="bi bi-speedometer2"></i> Performance Optimisation</div>
-      <div class="comp-pill"><i class="bi bi-check-circle"></i> Accountability &amp; Ownership</div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ EXPERIENCE & PROJECTS ============ -->
-<section id="experience">
-  <div class="container-narrow">
-    <div class="section-head reveal">
-      <span class="section-tag">// 03 &mdash; Experience</span>
-      <h2>Where I've Worked</h2>
-    </div>
-
-    <div class="timeline reveal">
-      <div class="timeline-item">
-        <div class="job-head">
-          <div>
-            <h3>Score Information Technologies Ltd.</h3>
-            <span class="role">Software Developer</span>
-          </div>
-          <span class="period">Nov 2023 &mdash; Present</span>
-        </div>
-        <p style="color:#c2cce0; max-width:760px;">
-          Building, enhancing and supporting enterprise web applications across the .NET Core ecosystem.
-          Working directly with multiple client accounts &mdash; gathering requirements, designing solutions,
-          developing features, and providing technical leadership on complex issues.
-        </p>
-      </div>
-    </div>
-
-    <!-- Project Cards -->
-    <div id="projects">
-      <div class="project-card reveal">
-        <div class="project-title"><i class="bi bi-bounding-box-circles"></i> BravoTrack &mdash; Multi-Client CRM Platform</div>
-        <div class="stack-row">
-          <span class="tag">ASP.NET Core Web API</span><span class="tag">MySQL</span>
-          <span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JavaScript</span><span class="tag">C#</span>
-        </div>
-        <ul>
-          <li>Designed, developed and maintained a multi-tenant CRM application built on ASP.NET Core Web API with a MySQL backend and an HTML/JavaScript front end, used by multiple client organisations.</li>
-          <li>Configured and managed multiple isolated client databases on a single platform, ensuring secure, accurate data segregation and seamless switching between client environments.</li>
-          <li>Collaborated closely with business stakeholders to analyse requirements, design data models and APIs, and deliver customised CRM features and workflows tailored to each client.</li>
-          <li>Provided technical leadership within the team by troubleshooting and resolving complex production issues, and performed query optimisation on MySQL to improve response times across multiple client databases.</li>
-        </ul>
-      </div>
-
-      <div class="project-card reveal">
-        <div class="project-title"><i class="bi bi-bar-chart-line"></i> Crimson 3 &mdash; ERP / Accounting System (Jute Mills)</div>
-        <div class="stack-row">
-          <span class="tag">ASP.NET Core MVC</span><span class="tag">SQL Server</span>
-          <span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JavaScript</span><span class="tag">C#</span>
-        </div>
-        <ul>
-          <li>Contributed to Crimson 3, an in-house ERP system with an integrated Accounts module built for the organisation's jute mill operations, using ASP.NET Core MVC and SQL Server.</li>
-          <li>Built and maintained MVC controllers, views and business logic for core accounting and ERP workflows (ledgers, transactions and financial reporting modules).</li>
-          <li>Wrote and optimised complex SQL Server queries, stored procedures and views to support accurate financial reporting and efficient data retrieval across the ERP system.</li>
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top py-3" id="mainNavbar">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="#home">
+        <span class="brand-badge">AB</span>
+        <span>Abir<span class="text-info">.</span>Software Engineer</span>
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
+        <i class="bi bi-list fs-2"></i>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="desktopNavbarContent">
+        <ul class="navbar-nav ms-auto gap-3 align-items-center">
+          <li class="nav-item"><a class="nav-link nav-link-custom" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link nav-link-custom" href="#skills">Skills</a></li>
+          <li class="nav-item"><a class="nav-link nav-link-custom" href="#experience">Experience</a></li>
+          <li class="nav-item"><a class="nav-link nav-link-custom" href="#education">Education</a></li>
+          <li class="nav-item ms-lg-2">
+            <a class="btn btn-outline-info rounded-pill px-4 btn-sm fw-semibold" href="#contact">Contact Me</a>
+          </li>
         </ul>
       </div>
     </div>
+  </nav>
 
-    <!-- Key Achievements -->
-    <div class="section-head reveal" style="margin-top:60px; margin-bottom:0;">
-      <span class="section-tag">// Highlights</span>
-      <h2 style="font-size:1.6rem;">Key Achievements &amp; Strengths</h2>
+  <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="mobileMenu" style="background-color: var(--panel); width: 260px;">
+    <div class="offcanvas-header border-bottom border-secondary border-opacity-25">
+      <h5 class="navbar-brand mb-0 fw-bold">Abir<span class="text-info">.</span>Software Engineer</h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
     </div>
-    <div class="achv-grid reveal">
-      <div class="achv-card">
-        <i class="bi bi-hdd-stack"></i>
-        <p>Successfully manage and support multiple live client databases and environments simultaneously without compromising data integrity or system performance.</p>
-      </div>
-      <div class="achv-card">
-        <i class="bi bi-lightning-charge"></i>
-        <p>Strong query-optimisation skills across MySQL, SQL Server and PL/SQL, resulting in noticeably faster data retrieval and improved application responsiveness.</p>
-      </div>
-      <div class="achv-card">
-        <i class="bi bi-people"></i>
-        <p>Recognised by the team for technical leadership &mdash; regularly assist colleagues in debugging and resolving complex issues, while maintaining strong stakeholder communication.</p>
-      </div>
+    <div class="offcanvas-body">
+      <ul class="navbar-nav d-flex flex-column gap-3 fs-5">
+        <li class="nav-item"><a class="nav-link text-white" href="#about" data-bs-dismiss="offcanvas">About</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#skills" data-bs-dismiss="offcanvas">Skills</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#experience" data-bs-dismiss="offcanvas">Experience</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#education" data-bs-dismiss="offcanvas">Education</a></li>
+        <li class="nav-item mt-3"><a class="btn btn-info w-100 rounded-pill text-dark fw-bold" href="#contact" data-bs-dismiss="offcanvas">Contact</a></li>
+      </ul>
     </div>
   </div>
-</section>
 
-<!-- ============ EDUCATION ============ -->
-<section id="education" style="background:var(--bg-soft);">
-  <div class="container-narrow">
-    <div class="section-head reveal">
-      <span class="section-tag">// 04 &mdash; Education</span>
-      <h2>Academic Background</h2>
+  <header id="home" class="container py-5" style="margin-top: 100px;">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-7">
+        <div class="mb-3">
+          <span class="eyebrow"><span class="pulse"></span> Open for Opportunities</span>
+        </div>
+        <h1 class="display-4 fw-bold lh-sm mb-3">
+          Hi, I'm Abir Banerjee —<br>Full Stack <span class="text-info">.NET</span> Developer
+        </h1>
+        <p class="lead text-secondary mb-4 fs-5" style="max-width: 600px;">
+          I design, build, and optimize enterprise-grade web applications with 
+          <strong class="text-white">.NET Core, ASP.NET Core Web API, C#, SQL Server &amp; MySQL</strong> — translating robust backend logic into fast, reliable software architecture.
+        </p>
+        <div class="d-flex gap-3 flex-wrap mb-5">
+          <a href="mailto:banerjeeabir273@gmail.com" class="btn btn-info text-dark px-4 py-2.5 fw-semibold d-inline-flex align-items-center gap-2">
+            <i class="bi bi-envelope-fill"></i> Get in Touch
+          </a>
+          <a href="https://in.linkedin.com/in/abir-banerjee-30267b212" target="_blank" class="btn btn-outline-secondary text-white px-4 py-2.5 fw-semibold d-inline-flex align-items-center gap-2">
+            <i class="bi bi-linkedin text-info"></i> LinkedIn
+          </a>
+        </div>
+        <div class="row g-4 border-top border-secondary border-opacity-25 pt-4">
+          <div class="col-auto me-4">
+            <h3 class="fw-bold mb-0">2.7+</h3>
+            <span class="small text-secondary">Years of Experience</span>
+          </div>
+          <div class="col-auto me-4">
+            <h3 class="fw-bold mb-0">2</h3>
+            <span class="small text-secondary">Enterprise Platforms</span>
+          </div>
+          <div class="col-auto">
+            <h3 class="fw-bold mb-0">Multi-Client</h3>
+            <span class="small text-secondary">Database Architecture</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="editor-window">
+          <div class="editor-header">
+            <span class="editor-dot" style="background-color: #ff5f57;"></span>
+            <span class="editor-dot" style="background-color: #febc2e;"></span>
+            <span class="editor-dot" style="background-color: #28c840;"></span>
+            <span class="ms-2 small text-secondary mono">Developer.cs</span>
+          </div>
+          <div class="editor-body text-white-50">
+            <div><span class="code-ln">1</span><span class="code-kw">public class</span> <span class="code-type">Developer</span></div>
+            <div><span class="code-ln">2</span>{</div>
+            <div><span class="code-ln">3</span>  <span class="code-prop">Name</span> = <span class="code-str">"Abir Banerjee"</span>,</div>
+            <div><span class="code-ln">4</span>  <span class="code-prop">Role</span> = <span class="code-str">"Full Stack .NET Developer"</span>,</div>
+            <div><span class="code-ln">5</span>  <span class="code-prop">Experience</span> = <span class="code-str">"2.7+ years"</span>,</div>
+            <div><span class="code-ln">6</span>  <span class="code-prop">Stack</span> = <span class="code-kw">new</span>[] {</div>
+            <div><span class="code-ln">7</span>    <span class="code-str">"C#"</span>, <span class="code-str">".NET Core"</span>, <span class="code-str">"ASP.NET API"</span>,</div>
+            <div><span class="code-ln">8</span>    <span class="code-str">"SQL Server"</span>, <span class="code-str">"MySQL"</span>, <span class="code-str">"JS"</span></div>
+            <div><span class="code-ln">9</span>  },</div>
+            <div><span class="code-ln">10</span>  <span class="code-prop">Location</span> = <span class="code-str">"Kolkata, India"</span>,</div>
+            <div><span class="code-ln">11</span>  <span class="code-prop">OpenToWork</span> = <span class="code-kw">true</span></div>
+            <div><span class="code-ln">12</span>}</div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="edu-grid reveal">
-      <div class="edu-card">
-        <span class="edu-year">2019 &mdash; 2023</span>
-        <h5>B.Tech, Computer Science &amp; Engineering</h5>
-        <div class="school">Narula Institute of Technology</div>
-        <div class="score">CGPA: 7.8</div>
-      </div>
-      <div class="edu-card">
-        <span class="edu-year">2019</span>
-        <h5>Higher Secondary (Class XII)</h5>
-        <div class="school">Kendriya Vidyalaya, Cossipore</div>
-        <div class="score">Percentage: 65.2%</div>
-      </div>
-      <div class="edu-card">
-        <span class="edu-year">2017</span>
-        <h5>Secondary (Class X)</h5>
-        <div class="school">Kendriya Vidyalaya, Cossipore</div>
-        <div class="score">CGPA: 9.4</div>
-      </div>
-    </div>
-  </div>
-</section>
+  </header>
 
-<!-- ============ CONTACT ============ -->
-<section id="contact">
-  <div class="container-narrow">
-    <div class="contact-panel reveal">
-      <span class="section-tag" style="justify-content:center; display:flex;">// 05 &mdash; Get in Touch</span>
-      <h2>Let's build something great together</h2>
-      <p>
-        I'm currently open to new full-stack .NET opportunities. Feel free to reach out via phone, WhatsApp,
-        email or LinkedIn &mdash; I usually respond within a day.
+  <section id="about" class="py-5 my-5">
+    <div class="container">
+      <div class="mb-5 reveal">
+        <span class="text-info mono small d-block mb-2">About Me</span>
+        <h2 class="fw-bold display-6">Engineering Performance-Driven Solutions</h2>
+      </div>
+      <div class="row g-5 align-items-start reveal">
+        <div class="col-lg-7 text-secondary fs-5">
+          <p class="mb-3">
+            I am a specialized Full Stack .NET Developer with <strong class="text-white">2.7+ years of industry experience</strong> conceptualizing, deploying, and maintaining enterprise infrastructure across .NET Core, ASP.NET Core Web API, C#, JavaScript, SQL Server, and MySQL ecosystems.
+          </p>
+          <p class="mb-3">
+            My engineering expertise is heavily focused on constructing robust CRM and ERP architectures, engineering multi-tenant isolated databases, and optimizing database execution loops via complex stored procedures and index structural tuning. 
+          </p>
+          <p>
+            I regularly interface directly with corporate stakeholders to analyze requirements, scope architecture design metrics, and lead cross-collaborative debugging workflows within Agile setups.
+          </p>
+        </div>
+        <div class="col-lg-5">
+          <div class="portfolio-card">
+            <h4 class="fw-bold text-white mb-4 d-flex align-items-center gap-2 fs-5">
+              <i class="bi bi-person-badge text-info"></i> Quick Demographics
+            </h4>
+            <div class="d-flex justify-content-between border-bottom border-secondary border-opacity-25 py-2.5 small">
+              <span class="text-secondary">Location</span><span class="text-white fw-medium">Kolkata, West Bengal, India</span>
+            </div>
+            <div class="d-flex justify-content-between border-bottom border-secondary border-opacity-25 py-2.5 small">
+              <span class="text-secondary">Current Core</span><span class="text-white fw-medium">Software Developer</span>
+            </div>
+            <div class="d-flex justify-content-between border-bottom border-secondary border-opacity-25 py-2.5 small">
+              <span class="text-secondary">Organization</span><span class="text-white fw-medium">Score Info Tech Ltd.</span>
+            </div>
+            <div class="d-flex justify-content-between py-2.5 small">
+              <span class="text-secondary">Availability</span><span class="text-info fw-semibold">Immediate / 1 Month</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="py-5 my-5" style="background-color: var(--bg-soft);">
+    <div class="container py-4">
+      <div class="mb-5 reveal">
+        <span class="text-info mono small d-block mb-2">Skill Matrix</span>
+        <h2 class="fw-bold display-6">Technical Competency</h2>
+      </div>
+      
+      <div class="row g-4 reveal">
+        <div class="col-md-6 col-lg-4">
+          <div class="portfolio-card">
+            <div class="icon-box mb-4"><i class="bi bi-code-slash"></i></div>
+            <h5 class="fw-bold text-white mb-3">Languages</h5>
+            <div>
+              <span class="tag-pill">C#</span><span class="tag-pill">SQL</span><span class="tag-pill">JavaScript</span><span class="tag-pill">HTML5 / CSS3</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="portfolio-card">
+            <div class="icon-box mb-4"><i class="bi bi-layers"></i></div>
+            <h5 class="fw-bold text-white mb-3">Frameworks</h5>
+            <div>
+              <span class="tag-pill">.NET Core</span><span class="tag-pill">ASP.NET Web API</span><span class="tag-pill">ASP.NET MVC</span><span class="tag-pill">LINQ</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="portfolio-card">
+            <div class="icon-box mb-4"><i class="bi bi-database"></i></div>
+            <h5 class="fw-bold text-white mb-3">Databases</h5>
+            <div>
+              <span class="tag-pill">SQL Server</span><span class="tag-pill">MySQL</span><span class="tag-pill">T-SQL</span><span class="tag-pill">PL/SQL</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="portfolio-card">
+            <div class="icon-box mb-4"><i class="bi bi-diagram-3"></i></div>
+            <h5 class="fw-bold text-white mb-3">Architecture &amp; Design</h5>
+            <div>
+              <span class="tag-pill">RESTful APIs</span><span class="tag-pill">Multi-tenant Architecture</span><span class="tag-pill">ERP Systems</span><span class="tag-pill">Query Optimization</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="portfolio-card">
+            <div class="icon-box mb-4"><i class="bi bi-tools"></i></div>
+            <h5 class="fw-bold text-white mb-3">Tools &amp; Workspaces</h5>
+            <div>
+              <span class="tag-pill">Visual Studio</span><span class="tag-pill">Git / SVN</span><span class="tag-pill">Postman</span><span class="tag-pill">SSMS</span><span class="tag-pill">Workbench</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="portfolio-card">
+            <div class="icon-box mb-4"><i class="bi bi-shield-check"></i></div>
+            <h5 class="fw-bold text-white mb-3">Professional Attributes</h5>
+            <div>
+              <span class="tag-pill">Agile / Scrum</span><span class="tag-pill">Requirement Scoping</span><span class="tag-pill">Technical Leadership</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex flex-wrap gap-2 mt-5 reveal">
+        <div class="comp-pill"><i class="bi bi-check-circle-fill"></i> Stakeholder Requirement Conversion</div>
+        <div class="comp-pill"><i class="bi bi-check-circle-fill"></i> Multi-Client Data Isolation Security</div>
+        <div class="comp-pill"><i class="bi bi-check-circle-fill"></i> Dynamic Database Query Optimization</div>
+        <div class="comp-pill"><i class="bi bi-check-circle-fill"></i> Agile Team Mentorship &amp; Debug Execution</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" class="py-5 my-5">
+    <div class="container">
+      <div class="mb-5 reveal">
+        <span class="text-info mono small d-block mb-2">Timeline &amp; Projects</span>
+        <h2 class="fw-bold display-6">Professional Narrative</h2>
+      </div>
+
+      <div class="work-timeline ms-2 reveal">
+        <div class="timeline-node mb-5">
+          <div class="d-flex flex-wrap justify-content-between align-items-baseline gap-2 mb-3">
+            <div>
+              <h3 class="h4 fw-bold text-white mb-1">Score Information Technologies Ltd.</h3>
+              <span class="text-info mono small">Software Developer</span>
+            </div>
+            <span class="badge border border-secondary text-secondary-emphasis rounded-pill px-3 py-2 fs-7 mono">Nov 2023 — Present</span>
+          </div>
+          <p class="text-secondary max-width-700 fs-5 mb-4">
+            Engineer and scale production systems across the enterprise .NET landscape. Actively serve as core alignment lead on technical issues across distinct external operations, specializing in relational layout configurations and data delivery pipelines.
+          </p>
+
+          <div class="row g-4 mt-2">
+            <div class="col-12">
+              <div class="portfolio-card bg-opacity-50">
+                <h5 class="fw-bold text-white mb-2 d-flex align-items-center gap-2">
+                  <i class="bi bi-bounding-box-circles text-info"></i> BravoTrack — Multi-Client CRM Platform
+                </h5>
+                <div class="mb-3">
+                  <span class="tag-pill">ASP.NET Core Web API</span><span class="tag-pill">C#</span><span class="tag-pill">MySQL</span><span class="tag-pill">JavaScript</span>
+                </div>
+                <ul class="text-secondary small mb-0 ps-3">
+                  <li class="mb-2">Architected core REST endpoints and database routing matrices to handle multiple distinct commercial clients within a singular dynamic app pool safely.</li>
+                  <li class="mb-2">Configured and maintained structural multi-tenant script separations on a MySQL architecture setup, strictly protecting private business intelligence layers.</li>
+                  <li class="mb-2">Optimized complex multi-table MySQL joins and execution trees, lowering response latencies heavily across live database installations.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="portfolio-card bg-opacity-50">
+                <h5 class="fw-bold text-white mb-2 d-flex align-items-center gap-2">
+                  <i class="bi bi-bar-chart-line text-info"></i> Crimson 3 — Industrial ERP System
+                </h5>
+                <div class="mb-3">
+                  <span class="tag-pill">ASP.NET Core MVC</span><span class="tag-pill">SQL Server</span><span class="tag-pill">T-SQL Stored Procs</span>
+                </div>
+                <ul class="text-secondary small mb-0 ps-3">
+                  <li class="mb-2">Designed MVC Controller modules and logic arrays handling ledger balancing, auditing streams, and multi-layered inventory reporting modules.</li>
+                  <li class="mb-2">Engineered performant SQL Server stored procedures, custom views, and data tables to handle real-time calculations without runtime bottlenecks.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education" class="py-5 my-5" style="background-color: var(--bg-soft);">
+    <div class="container py-4">
+      <div class="mb-5 reveal">
+        <span class="text-info mono small d-block mb-2">Academic Background</span>
+        <h2 class="fw-bold display-6">Education</h2>
+      </div>
+      <div class="row g-4 reveal">
+        <div class="col-lg-4">
+          <div class="portfolio-card">
+            <span class="text-info mono small d-block mb-2">2019 — 2023</span>
+            <h5 class="fw-bold text-white mb-1">B.Tech, Computer Science &amp; Engineering</h5>
+            <div class="text-secondary small mb-3">Narula Institute of Technology</div>
+            <div class="border-top border-secondary border-opacity-25 pt-2 mt-auto text-secondary mono small">Score: 7.8 CGPA</div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="portfolio-card">
+            <span class="text-info mono small d-block mb-2">2019</span>
+            <h5 class="fw-bold text-white mb-1">Higher Secondary (Class XII)</h5>
+            <div class="text-secondary small mb-3">Kendriya Vidyalaya, Cossipore</div>
+            <div class="border-top border-secondary border-opacity-25 pt-2 mt-auto text-secondary mono small">Score: 65.2%</div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="portfolio-card">
+            <span class="text-info mono small d-block mb-2">2017</span>
+            <h5 class="fw-bold text-white mb-1">Secondary (Class X)</h5>
+            <div class="text-secondary small mb-3">Kendriya Vidyalaya, Cossipore</div>
+            <div class="border-top border-secondary border-opacity-25 pt-2 mt-auto text-secondary mono small">Score: 9.4 CGPA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="container py-5 my-5">
+    <div class="portfolio-card text-center py-5 px-4 reveal" style="background: linear-gradient(135deg, var(--panel) 0%, var(--panel-2) 100%);">
+      <span class="text-info mono small d-block mb-2">Inquiries</span>
+      <h2 class="fw-bold display-6 text-white mb-3">Let's Construct Something Exceptional</h2>
+      <p class="text-secondary mx-auto mb-5" style="max-width: 500px;">
+        I am currently evaluating strategic .NET software engineering opportunities. Reach out via any of the professional gateways below.
       </p>
-      <div class="contact-grid">
-        <a href="tel:+919073830606" class="contact-chip">
-          <i class="bi bi-telephone-fill"></i>
-          <strong>+91 9073830606</strong>
-          <span>Phone / Call</span>
-        </a>
-        <a href="https://wa.me/919073830606" target="_blank" class="contact-chip">
-          <i class="bi bi-whatsapp"></i>
-          <strong>+91 9073830606</strong>
-          <span>WhatsApp</span>
-        </a>
-        <a href="mailto:banerjeeabir273@gmail.com" class="contact-chip">
-          <i class="bi bi-envelope-fill"></i>
-          <strong>banerjeeabir273</strong>
-          <span>Email</span>
-        </a>
-        <a href="https://in.linkedin.com/in/abir-banerjee-30267b212" target="_blank" class="contact-chip">
-          <i class="bi bi-linkedin"></i>
-          <strong>abir-banerjee</strong>
-          <span>LinkedIn</span>
-        </a>
-        <a href="https://www.google.com/maps/search/?api=1&query=Baranagar,Kolkata,700090" target="_blank" class="contact-chip">
-          <i class="bi bi-geo-alt-fill"></i>
-          <strong>Kolkata, India</strong>
-          <span>Location</span>
-        </a>
+      
+      <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3 justify-content-center">
+        <div class="col">
+          <a href="tel:+919073830606" class="portfolio-card bg-dark bg-opacity-25 d-flex flex-column align-items-center justify-content-center p-3 text-white h-100">
+            <i class="bi bi-telephone-fill text-info mb-2 fs-4"></i>
+            <span class="fw-bold small">+91 9073830606</span>
+            <span class="text-secondary text-center small mt-1" style="font-size: 0.75rem;">Voice Call</span>
+          </a>
+        </div>
+        <div class="col">
+          <a href="https://wa.me/919073830606" target="_blank" class="portfolio-card bg-dark bg-opacity-25 d-flex flex-column align-items-center justify-content-center p-3 text-white h-100">
+            <i class="bi bi-whatsapp text-info mb-2 fs-4"></i>
+            <span class="fw-bold small">+91 9073830606</span>
+            <span class="text-secondary text-center small mt-1" style="font-size: 0.75rem;">WhatsApp</span>
+          </a>
+        </div>
+        <div class="col">
+          <a href="mailto:banerjeeabir273@gmail.com" class="portfolio-card bg-dark bg-opacity-25 d-flex flex-column align-items-center justify-content-center p-3 text-white h-100">
+            <i class="bi bi-envelope-fill text-info mb-2 fs-4"></i>
+            <span class="fw-bold small">banerjeeabir273</span>
+            <span class="text-secondary text-center small mt-1" style="font-size: 0.75rem;">Email Communication</span>
+          </a>
+        </div>
+        <div class="col">
+          <a href="https://in.linkedin.com/in/abir-banerjee-30267b212" target="_blank" class="portfolio-card bg-dark bg-opacity-25 d-flex flex-column align-items-center justify-content-center p-3 text-white h-100">
+            <i class="bi bi-linkedin text-info mb-2 fs-4"></i>
+            <span class="fw-bold small">abir-banerjee</span>
+            <span class="text-secondary text-center small mt-1" style="font-size: 0.75rem;">LinkedIn Profile</span>
+          </a>
+        </div>
+        <div class="col">
+          <div class="portfolio-card bg-dark bg-opacity-25 d-flex flex-column align-items-center justify-content-center p-3 text-white h-100">
+            <i class="bi bi-geo-alt-fill text-info mb-2 fs-4"></i>
+            <span class="fw-bold small">Kolkata, India</span>
+            <span class="text-secondary text-center small mt-1" style="font-size: 0.75rem;">Location Context</span>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ============ FOOTER ============ -->
-<footer>
-  <div class="container-narrow">
-    <p>&copy; <span id="year"></span> Abir Banerjee. Built with Bootstrap 5 &amp; a little C# love.</p>
-    <div class="socials">
-      <a href="https://in.linkedin.com/in/abir-banerjee-30267b212" target="_blank"><i class="bi bi-linkedin"></i></a>
-      <a href="mailto:banerjeeabir273@gmail.com"><i class="bi bi-envelope-fill"></i></a>
-      <a href="https://wa.me/919073830606" target="_blank"><i class="bi bi-whatsapp"></i></a>
-      <a href="tel:+919073830606"><i class="bi bi-telephone-fill"></i></a>
+  <footer class="border-top border-secondary border-opacity-25 py-4 mt-5">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center gap-3">
+      <p class="text-secondary small mb-0">© <span id="year"></span> Abir Banerjee. Developed using Bootstrap 5.</p>
+      <div class="d-flex gap-3 fs-5">
+        <a href="https://in.linkedin.com/in/abir-banerjee-30267b212" target="_blank" class="text-secondary hover-info"><i class="bi bi-linkedin"></i></a>
+        <a href="mailto:banerjeeabir273@gmail.com" class="text-secondary hover-info"><i class="bi bi-envelope-fill"></i></a>
+        <a href="https://wa.me/919073830606" target="_blank" class="text-secondary hover-info"><i class="bi bi-whatsapp"></i></a>
+      </div>
     </div>
-  </div>
-</footer>
+  </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-<script>
-  document.getElementById('year').textContent = new Date().getFullYear();
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Navbar blur on scroll
-  const nav = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 30);
-  });
-
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) e.target.classList.add('in');
+    // Smooth-reveal system logic 
+    const navigationBar = document.getElementById('mainNavbar');
+    window.addEventListener('scroll', () => {
+      navigationBar.classList.toggle('scrolled', window.scrollY > 40);
     });
-  }, { threshold: 0.12 });
-  reveals.forEach(el => io.observe(el));
-</script>
+
+    const revealElements = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+        }
+      });
+    }, { threshold: 0.08 });
+    
+    revealElements.forEach(element => observer.observe(element));
+  </script>
 </body>
 </html>
